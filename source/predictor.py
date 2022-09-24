@@ -3,19 +3,17 @@ import numpy as np
 from keras.models import load_model
 from PIL import Image, ImageOps
 
-from globalvar import KERAS_MODAL_PATH
 
-
-class Predict:
+class Predictor:
 
     def __init__(self, glv):
         self.glv = glv
         self.image = None
-        self.model = self.load_model()
+        # self.model = self.load_model()
 
     @staticmethod
     def load_model():
-        return load_model(f'{KERAS_MODAL_PATH}/keras_modal.h5')
+        return load_model(f'./../keras_model/keras_modal.h5')
 
     @staticmethod
     def load_image(image_path):
@@ -38,9 +36,6 @@ class Predict:
         return data
 
     def predict(self, image_path):
-        data = self.load_image_data(image_path)
+        image_data = self.load_image_data(image_path)
 
-        prediction = self.model.predict(data)
-
-        if prediction == 2:
-            self.glv.move_image(image_path)
+        return self.model.predict(image_data)
